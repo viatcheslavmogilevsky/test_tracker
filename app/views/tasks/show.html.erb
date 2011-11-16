@@ -1,0 +1,50 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @task.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= raw(@task.description) %>
+</p>
+
+<p>
+  <b>Estimate:</b>
+  <%= @task.estimate %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @task.status %>
+</p>
+
+<p>
+  <b>Requested:</b>
+  <%= @task.user.name %>
+</p>
+
+<p>
+  <b>Owns:</b>
+  <%= @task.owns %>
+</p>
+
+<p>
+  <b>Subtasks:</b>
+  <% @task.sub_tasks.each do |elem| %>
+      <p>
+        <i> <%= elem.title%>:</i>
+          <% if elem.checked %>
+              finished
+          <% else %>
+              not finished yet
+          <% end %>
+      </p>
+  <% end %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_task_path(@task) %> |
+<%= link_to 'Back', tasks_path %>
