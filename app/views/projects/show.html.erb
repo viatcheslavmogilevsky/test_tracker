@@ -1,0 +1,64 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @project.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @project.description %>
+</p>
+
+<p>
+  <b>Account:</b>
+  <%= @project.account.name %>
+</p>
+
+<table id="layout" class="layout" cellspacing="16px">
+      <tr>
+        <th>Current</th>
+        <th>Started</th>
+        <th>Finished</th>
+      </tr>
+      <% @tasks_max_count.times do |elem| %>
+           <tr> 
+                <td>
+                   <% if @current_tasks[elem-1] %>
+                      <%= link_to @current_tasks[elem-1].title, task_path(@current_tasks[elem-1]) %>
+                      <p> </p>
+                      owns:<%= @current_tasks[elem-1].owns %>
+                      <p> </p>
+                   <% end %>
+                </td>
+                <td>
+                   <% if @started_tasks[elem-1] %>
+                      <%= link_to @started_tasks[elem-1].title, task_path(@started_tasks[elem-1]) %>
+                      <p> </p>
+                      owns:<%= @started_tasks[elem-1].owns %>
+                      <p> </p>
+                   <% end %>
+                </td>
+                <td>
+                   <% if @finished_tasks[elem-1] %>
+                      <%= link_to @finished_tasks[elem-1].title, task_path(@finished_tasks[elem-1]) %>
+                      <p> </p>
+                      owns:<%= @finished_tasks[elem-1].owns %>
+                      <p> </p>
+                   <% end %>
+                </td>
+           </tr> 
+      <% end %>
+      <!--
+      <tr>
+        <td id="done" class="panel done " style="width: 25%;"></td>
+        <td id="current" class="panel current " style="width: 25%;"> </td>
+        <td id="backlog" class="panel backlog " style="width: 25%;"> </td>
+      </tr>
+      -->
+
+</table>
+
+<%= link_to 'Start new task', new_task_path %> |
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>
