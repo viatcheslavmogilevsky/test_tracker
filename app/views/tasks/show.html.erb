@@ -1,0 +1,76 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @task.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= raw(@task.description) %>
+</p>
+
+<p>
+  <b>Estimate:</b>
+  <%= @task.estimate %>
+</p>
+
+<p>
+  <b>Status:</b>
+  <%= @task.status %>
+</p>
+
+<p>
+  <b>Requested:</b>
+  <%= @task.user.name %>
+</p>
+
+<p>
+  <b>Owns:</b>
+  <%= find_username_by_id(@task.owns) %>
+</p>
+
+<% if @comments.present? %>
+<p>
+  <b>Comments:</b>
+  <p> </p>
+  <%  @comments.each do |comment| %>
+  <%= comment.user.name + " says: " + comment.content + ' (' + comment.created_at.to_s + ')' %> 
+  <p> </p>
+  <% end %>
+</p>
+<% end %>
+
+<% form_for @comment do |f|%>
+  <div class="field">
+    <%= f.label "Leave a comment:" %><br />
+    <%= f.text_area :content %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :user_id, :value => current_user.id %>
+  </div>
+  <div class="field">
+    <%= f.hidden_field :task_id, :value => @task.id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<p>
+  <b>Subtasks:</b>
+  <% @task.sub_tasks.each do |elem| %>
+      <p>
+        <i> <%= elem.title%>:</i>
+          <% if elem.checked %>
+              finished
+          <% else %>
+              not finished yet
+          <% end %>
+      </p>
+  <% end %>
+</p>
+
+
+
+<%= link_to 'Edit', edit_project_task_path(@project,@task) %> |
+<%= link_to 'Back', project_tasks_path %>

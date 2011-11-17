@@ -1,0 +1,70 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @project.title %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @project.description %>
+</p>
+
+<p>
+  <b>Account:</b>
+  <%= @project.account.name %>
+</p>
+
+<table bordercolor = "black" >
+      <tr bgcolor = "gray">
+        <th>Current</th>
+        <th>Started</th>
+        <th>Finished</th>
+      </tr>
+      <% @tasks_max_count.times do %>
+           <tr bordercolor = "black"> 
+                <td bgcolor = "LightCyan" width="20%">
+                   <% if elem = @current_tasks.shift %>
+                      <%= link_to elem.title, project_task_path(@project,elem) %>
+                      <br /> 
+                      owns:<%= find_username_by_id(elem.owns) %>
+                      <br /> 
+                      requsted: <%= elem.user.name %>
+                      <p> </p>
+                   <% end %>
+                </td>
+                <td bgcolor = "LightGreen" width="20%">
+                   <% if elem = @started_tasks.shift %>
+                      <%= link_to elem.title, project_task_path(@project,elem) %>
+                      <br /> 
+                      owns:<%= find_username_by_id(elem.owns) %>
+                      <br /> 
+                      requsted: <%= elem.user.name %>
+                      <p> </p>
+                   <% end %>
+                </td>
+                <td bgcolor = "LightSalmon" width="20%">
+                   <% if elem = @finished_tasks.shift %>
+                      <%= link_to elem.title, project_task_path(@project,elem) %>
+                      <br /> 
+                      owns:<%= find_username_by_id(elem.owns) %>
+                      <br /> 
+                      requsted: <%= elem.user.name %>
+                      <p> </p>
+                   <% end %>
+                </td>
+           </tr> 
+      <% end %>
+      <!--
+      <tr>
+        <td id="done" class="panel done " style="width: 25%;"></td>
+        <td id="current" class="panel current " style="width: 25%;"> </td>
+        <td id="backlog" class="panel backlog " style="width: 25%;"> </td>
+      </tr>
+      -->
+
+</table>
+
+<%= link_to 'Start new task', new_project_task_path(@project) %> |
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

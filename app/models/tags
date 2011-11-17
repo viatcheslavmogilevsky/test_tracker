@@ -1,0 +1,17 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Account	account.rb	/^class Account < ActiveRecord::Base$/;"	c
+Comment	comment.rb	/^class Comment < ActiveRecord::Base$/;"	c
+Member	member.rb	/^class Member < ActiveRecord::Base$/;"	c
+Project	project.rb	/^class Project < ActiveRecord::Base$/;"	c
+SubTask	sub_task.rb	/^class SubTask < ActiveRecord::Base$/;"	c
+Task	task.rb	/^class Task < ActiveRecord::Base$/;"	c
+User	user.rb	/^class User < ActiveRecord::Base$/;"	c
+current_tasks	project.rb	/^  def current_tasks$/;"	f	class:Project
+finished_tasks	project.rb	/^  def finished_tasks$/;"	f	class:Project
+started_tasks	project.rb	/^  def started_tasks$/;"	f	class:Project
+user_accounts	user.rb	/^  def user_accounts$/;"	f	class:User
