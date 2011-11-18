@@ -1,0 +1,18 @@
+<% if @account.requests.present?  %>
+	<h1>Requests to this account:</h1>
+	<table>
+	 	<% @account.requests.each do |request|%>
+	 		<tr>
+	 			<td>
+	 				<span>
+	 					<%= request.user.name %>
+	 					(<%= request.user.email %>)
+	 				</span>		
+	 				<br>
+	 				<%= link_to "Accept", account_path(@account, :accept => request.user_id) %> | 
+	 				<%= link_to "Reject", account_path(@account, :accept => -request.user_id) %>
+	 			</td>
+	 		</tr>
+	 	<% end %>
+	</table> 	
+<% end %>
