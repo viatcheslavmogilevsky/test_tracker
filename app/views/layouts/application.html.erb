@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>TestTracker</title>
-  <%= stylesheet_link_tag :all %>
-  <%= javascript_include_tag :defaults %>
+  <title>TestTracker</title> 
   <%= csrf_meta_tag %>
+  <!--[if lt IE 9]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
   <%= stylesheet_link_tag 'blueprint/screen', :media => 'screen' %>
   <%= stylesheet_link_tag 'blueprint/print',  :media => 'print' %>
+  <!--[if lt IE 8]><%= stylesheet_link_tag 'blueprint/ie' %><![endif]-->
+  <%= stylesheet_link_tag 'custom', :media => 'screen' %>
 </head>
 <body>
-  <div id="user_nav">
-      <% if user_signed_in?%>
-          Signed in as a <%= current_user.name %>
-          <%= link_to "Sign out", destroy_user_session_path %>
-          <%= hidden_field :user, :id, :value => current_user.id %>
-      <% else %>
-          <%= link_to "Sign in", new_user_session_url %> or <%=  link_to "Sign up", new_user_registration_url %>
-      <% end %>
+  <div class="container">
+      <%= javascript_include_tag :defaults %>
+      <%= render 'layouts/header' %>
+      <section class="round">
+        <%= yield %>
+      </section>
   </div>
  
-
-<%= yield %>
-
-
 </body>
 </html>
