@@ -9,6 +9,12 @@
   <%= render "shared/index_projects"  %>
 </p>
 
+<p>
+  <%= render "shared/requests"  %>
+</p>
+
+<% unless current_user.id == @account.user_id %>
+<%= link_to "Send request to #{@account.name}", account_path(@account, :request_from => current_user.id) %> | <% end %>
 
 <%= link_to 'Edit', edit_account_path(@account) %> |
 <%= link_to 'Back', accounts_path %>

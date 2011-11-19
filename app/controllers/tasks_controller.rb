@@ -53,7 +53,7 @@ class TasksController < ApplicationController
         format.html { redirect_to(@project, :notice => 'Task was successfully created.') }
         format.xml  { render :xml => @project, :status => :created, :location => [@project,@task] }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to new_project_task_path, :notice => "Title can't be blank" }
         format.xml  { render :xml => @task.errors, :status => :unprocessable_entity }
       end
     end

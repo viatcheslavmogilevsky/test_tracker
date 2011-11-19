@@ -4,4 +4,8 @@ class Account < ActiveRecord::Base
   belongs_to :user
 
   validates :name, :presence => true
+
+  def requests
+  	 self.members.where(:status => false)
+  end	
 end
