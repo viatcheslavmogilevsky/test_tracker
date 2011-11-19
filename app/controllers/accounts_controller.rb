@@ -16,9 +16,29 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     @projects = @account.projects
+    new_member = nil
+    if params[:request_from]
+       new_member = Member.new(:user_id => params[:request_from], :account_id => params[:id],:status => false)
+    end
+
+    if params[:accept]
+        old_member = @account.members.where(:user_id => params[:accept].to_i.abs)
+        if params[:accept].to_i > 0
+            old_member[0].status = true
+            old_member[0].save
+        else
+            old_member[0].destroy    
+        end     
+    end
+  
     respond_to do |format|
-      format.html # show.html.erb
-      format.xml  { render :xml => @account }
+      if new_member and new_member.save
+        format.html # show.html.erb
+        format.xml  { render :xml => @account }
+      else
+        format.html {render :notice => "User has already been taken!"}
+        format.xml {render :xml => @account}
+      end
     end
   end
 

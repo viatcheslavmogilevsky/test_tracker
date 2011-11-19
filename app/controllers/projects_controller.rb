@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   # GET /projects.xml
   include ProjectsHelper
   before_filter :authenticate_user!
-  before_filter :find_accounts, :only => [:new,:edit]
+  before_filter :find_accounts, :only => [:new]
 
   def index
     @projects = current_user.projects
@@ -43,6 +43,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   def edit
     @project = Project.find(params[:id])
+    @accounts = @project.user.accounts.map {|account| [account.name, account.id]}
   end
 
   # POST /projects
@@ -55,7 +56,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to(@project, :notice => 'Project was successfully created.') }
         format.xml  { render :xml => @project, :status => :created, :location => @project }
       else
-        format.html { render :action => "new" }
+        format.html { redirect_to new_project_path }
         format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
     end
@@ -71,7 +72,7 @@ class ProjectsController < ApplicationController
         format.html { redirect_to(@project, :notice => 'Project was successfully updated.') }
         format.xml  { head :ok }
       else
-        format.html { render :action => "edit" }
+        format.html { redirect_to edit_project_path(@project) }
         format.xml  { render :xml => @project.errors, :status => :unprocessable_entity }
       end
     end
