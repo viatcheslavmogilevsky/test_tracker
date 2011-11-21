@@ -1,26 +1,28 @@
-<h1>Listing projects</h1>
+<h1>Your projects</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Account</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-
-<% @projects.each do |project| %>
-  <tr>
-    <td><%= link_to project.title, project %></td>
-    <td><%= project.account.name if project.account.present? %></td>
-    <td>
-        <%= link_to 'Edit', edit_project_path(project) %>|
+<% if @projects.present? %>
+  <table>
+    <tr>
+      <th>Title</th>
+      <th>Account</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+    <% @projects.each do |project| %>
+     <tr>
+       <td><%= link_to project.title, project %></td>
+       <td><%= project.account.name if project.account.present? %></td>
+       <td>
+        <%= link_to 'Edit', edit_project_path(project) %> | 
         <%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %>
-    </td>
-  </tr>
-<% end %>
+       </td>
+      </tr>
+     <% end %>
 </table>
-
+<% else %>
+  <p>You haven't got any projects.</p>
+<% end %>
 <br />
 
 <%= link_to 'New Project', new_project_path %>

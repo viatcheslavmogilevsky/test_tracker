@@ -15,49 +15,63 @@
   <%= @project.account.name %>
 </p>
 
-<table>
-      <tr bgcolor = "gray">
-        <th>Current</th>
-        <th>Started</th>
-        <th>Finished</th>
-      </tr>
-      <% @tasks_max_count.times do %>
-           <tr bordercolor = "black"> 
-                <td bgcolor = "LightCyan" width="20%">
-                   <% if elem = @current_tasks.shift %>
-                      <%= link_to elem.title, project_task_path(@project,elem) %>
-                      <br /> 
-                      owns:<%= @project.account.members.find(elem.owns).user.name %>
-                      <br /> 
-                      requested: <%= elem.user.name %>
-                      <p> </p>
-                   <% end %>
-                </td>
-                <td bgcolor = "LightGreen" width="20%">
-                   <% if elem = @started_tasks.shift %>
-                      <%= link_to elem.title, project_task_path(@project,elem) %>
-                      <br /> 
-                      owns:<%= @project.account.members.find(elem.owns).user.name %>
-                      <br /> 
-                      requested: <%= elem.user.name %>
-                      <p> </p>
-                   <% end %>
-                </td>
-                <td bgcolor = "LightSalmon" width="20%">
-                   <% if elem = @finished_tasks.shift %>
-                      <%= link_to elem.title, project_task_path(@project,elem) %>
-                      <br /> 
-                      owns:<%= @project.account.members.find(elem.owns).user.name %>
-                      <br /> 
-                      requested: <%= elem.user.name %>
-                      <p> </p>
-                   <% end %>
-                </td>
-           </tr> 
-      <% end %>
-
-</table>
-
+<% unless @tasks_max_count == 0 %>
+  <table>
+        <tr bgcolor = "gray">
+          <th>Current</th>
+          <th>Started</th>
+          <th>Finished</th>
+        </tr>
+        <% @tasks_max_count.times do %>
+             <tr bordercolor = "black"> 
+                  <td bgcolor = "LightCyan" width="20%">
+                     <% if elem = @current_tasks.shift %>
+                        <%= link_to elem.title, project_task_path(@project,elem) %>
+                        <br /> 
+                        owns:<%= @project.account.members.find(elem.owns).user.name %>
+                        <br /> 
+                        requested: <%= elem.user.name %>
+                        <br /> 
+                        <% if elem.comments.present? %>
+                          comments: <%= elem.comments.count %>
+                        <% end %>
+                        <p> </p>
+                     <% end %>
+                  </td>
+                  <td bgcolor = "LightGreen" width="20%">
+                     <% if elem = @started_tasks.shift %>
+                        <%= link_to elem.title, project_task_path(@project,elem) %>
+                        <br /> 
+                        owns:<%= @project.account.members.find(elem.owns).user.name %>
+                        <br /> 
+                        requested: <%= elem.user.name %>
+                        <br /> 
+                        <% if elem.comments.present? %>
+                          comments: <%= elem.comments.count %>
+                        <% end %>
+                        <p> </p>
+                     <% end %>
+                  </td>
+                  <td bgcolor = "LightSalmon" width="20%">
+                     <% if elem = @finished_tasks.shift %>
+                        <%= link_to elem.title, project_task_path(@project,elem) %>
+                        <br /> 
+                        owns:<%= @project.account.members.find(elem.owns).user.name %>
+                        <br /> 
+                        requested: <%= elem.user.name %>
+                        <br /> 
+                        <% if elem.comments.present? %>
+                          comments: <%= elem.comments.count %>
+                        <% end %>
+                        <p> </p>
+                     <% end %>
+                  </td>
+             </tr> 
+        <% end %>
+  </table>
+<% else %>
+  <p> You haven't got any tasks on this project. </p>
+<% end %>
 <%= link_to 'Start new task', new_project_task_path(@project) %> |
 <%= link_to 'Edit', edit_project_path(@project) %> |
 <%= link_to 'Back', projects_path %>

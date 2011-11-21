@@ -1,7 +1,5 @@
 <h1>New project</h1>
-<% if @accounts.present? %>
+
 <%= render 'form' %>
-<% else  %>
-  Before creating a project, please,<%= link_to  "create an account.", new_account_path%>
-<% end %>
+
 <%= link_to 'Back', projects_path %>

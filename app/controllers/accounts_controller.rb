@@ -16,6 +16,7 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     @projects = @account.projects
+    #
     new_member = nil
     if params[:request_from]
        new_member = Member.new(:user_id => params[:request_from], :account_id => params[:id],:status => false)
@@ -30,7 +31,7 @@ class AccountsController < ApplicationController
             old_member[0].destroy    
         end     
     end
-  
+    #  
     respond_to do |format|
       if new_member and new_member.save
         format.html # show.html.erb
