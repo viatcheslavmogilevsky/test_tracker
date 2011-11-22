@@ -1,4 +1,4 @@
-<% if @account.members.present? %>
+<% if @account.true_members.present? %>
 <h1>Members on this account:</h1>
 	<table>
 	 	<% @account.members.each do |member|%>

@@ -8,4 +8,8 @@ class Account < ActiveRecord::Base
   def requests
   	 self.members.where(:status => false)
   end	
+
+  def true_members
+  	 self.members.where(:status => true)
+  end
 end
