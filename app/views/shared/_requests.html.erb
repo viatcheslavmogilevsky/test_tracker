@@ -9,8 +9,8 @@
 	 					(<%= request.user.email %>)
 	 				</span>		
 	 				<br>
-	 				<%= link_to "Accept", account_path(@account, :accept => request.user_id) %> | 
-	 				<%= link_to "Reject", account_path(@account, :accept => -request.user_id) %>
+	 				<%= link_to "Accept", accept_request_account_path(@account, :member_id => request.id),:method => :put %> | 
+	 				<%= link_to "Reject", reject_request_account_path(@account, :member_id => request.id), :method => :delete %>
 	 			</td>
 	 		</tr>
 	 	<% end %>

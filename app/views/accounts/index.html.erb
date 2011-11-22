@@ -1,4 +1,4 @@
-<h1><% @title %></h1>
+<h1><%= @title %></h1>
 <% if @accounts.present? %>
   <table>
     <tr>
@@ -9,7 +9,11 @@
     </tr>
     <% @accounts.each do |account| %>
       <tr>
-        <td><%= link_to "#{account.name} #{'('+account.user.name+')' unless current_user.id == account.user.id}", account %></td>
+        <% hint = 'Your account' %>
+        <% unless current_user.id == account.user.id %>
+            <% hint = account.user.name %>
+        <% end %>    
+        <td><%= link_to "#{account.name} (#{hint})", account %></td>
         <% if account.user.id == current_user.id %>
         <td>
           <%= link_to('Edit', edit_account_path(account))%> |

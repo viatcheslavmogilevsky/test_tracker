@@ -21,5 +21,9 @@ class User < ActiveRecord::Base
   def user_accounts
     self.accounts.map {|account| [account.name, account.id]}
   end
+
+  def available_accounts
+    self.members.map {|member| member.account}
+  end
 end
 

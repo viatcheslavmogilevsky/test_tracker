@@ -9,7 +9,13 @@ TestTracker::Application.routes.draw do
 
   devise_for :users
   
-  resources :accounts
+  resources :accounts do
+  	member do
+  		post 'send_request'
+  		put	'accept_request'
+  		delete 'reject_request'
+  	end
+  end
 
   root :to => "projects#index"
  

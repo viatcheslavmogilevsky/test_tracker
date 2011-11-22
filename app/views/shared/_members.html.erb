@@ -1,0 +1,19 @@
+<% if @account.members.present? %>
+<h1>Members on this account:</h1>
+	<table>
+	 	<% @account.members.each do |member|%>
+	 		<tr>
+	 			<td>
+	 				<span>
+	 					<%= member.user.name %>
+	 					(<%= member.user.email %>)
+	 				</span>		
+	 				<br>
+	 				<% unless @account.user.id == member.user.id%>
+	 				<%= link_to "Remove", reject_request_account_path(@account, :member_id => member.id), :method => :delete %>
+	 				<% end %>
+	 			</td>
+	 		</tr>
+	 	<% end %>
+	</table> 
+<% end %>

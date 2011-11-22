@@ -3,7 +3,7 @@ class ProjectsController < ApplicationController
   # GET /projects.xml
   include ProjectsHelper
   before_filter :authenticate_user!
-  before_filter :correct_user, :only => [:show, :destroy,:edit]
+  before_filter :correct_user, :only => [:show, :destroy,:edit, :update]
   before_filter :have_some_accounts, :only => [:new]
 
   def index
@@ -64,7 +64,6 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.xml
   def update
-    @project = Project.find(params[:id])
 
     respond_to do |format|
       if @project.update_attributes(params[:project])

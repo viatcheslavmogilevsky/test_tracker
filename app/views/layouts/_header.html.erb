@@ -2,9 +2,17 @@
 	<nav class="round">
 		<ul>
   			<% if user_signed_in?%>
+            <li>
+              <%= link_to "My accounts", accounts_path(:not_all => true) %>
+            </li>
+            <li>
+              <%= link_to "All accounts", accounts_path %>
+            </li>
+            <li>
           	Signed in as a <%= current_user.name %>
           		<%= link_to "Sign out", destroy_user_session_path %>
           		<%= hidden_field :user, :id, :value => current_user.id %>
+            </li>  
       		<% else %>
           		<%= link_to "Sign in", new_user_session_url %> or <%=  link_to "Sign up", new_user_registration_url %>
       		<% end %>

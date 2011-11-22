@@ -2,13 +2,15 @@ class AccountsController < ApplicationController
   # GET /accounts
   # GET /accounts.xml
   before_filter :authenticate_user!
+  before_filter :correct_user, :only => [:destroy,:edit,:update,:accept_request,:reject_request]
+
   def index
-    if params[:user_id]
-      @user_accouns = current_user.accounts
+    if params[:not_all]
+      @accounts = current_user.available_accounts
       @title = "Your accounts"
     else  
       @accounts = Account.all
-      @title = "Listing accounts"    
+      @title = "Listing accounts"             
     end  
     respond_to do |format|
       format.html # index.html.erb
@@ -22,30 +24,11 @@ class AccountsController < ApplicationController
   def show
     @account = Account.find(params[:id])
     @projects = @account.projects
-    #
-    new_member = nil
-    if params[:request_from]
-       new_member = Member.new(:user_id => params[:request_from], :account_id => params[:id],:status => false)
-    end
+    @members = @account.members.map {|member| member.user_id}
 
-    if params[:accept]
-        old_member = @account.members.where(:user_id => params[:accept].to_i.abs)
-        if params[:accept].to_i > 0
-            old_member[0].status = true
-            old_member[0].save
-        else
-            old_member[0].destroy    
-        end     
-    end
-    #  
     respond_to do |format|
-      if new_member and new_member.save
         format.html # show.html.erb
         format.xml  { render :xml => @account }
-      else
-        format.html {render :notice => "User has already been taken!"}
-        format.xml {render :xml => @account}
-      end
     end
   end
 
@@ -62,7 +45,7 @@ class AccountsController < ApplicationController
 
   # GET /accounts/1/edit
   def edit
-    @account = Account.find(params[:id])
+
   end
 
   # POST /accounts
@@ -85,8 +68,6 @@ class AccountsController < ApplicationController
   # PUT /accounts/1
   # PUT /accounts/1.xml
   def update
-    @account = Account.find(params[:id])
-
     respond_to do |format|
       if @account.update_attributes(params[:account])
         format.html { redirect_to(@account, :notice => 'Account was successfully updated.') }
@@ -101,7 +82,6 @@ class AccountsController < ApplicationController
   # DELETE /accounts/1
   # DELETE /accounts/1.xml
   def destroy
-    @account = Account.find(params[:id])
     @account.destroy
 
     respond_to do |format|
@@ -110,5 +90,44 @@ class AccountsController < ApplicationController
     end
   end
 
+  def send_request
+    new_member = Member.new(:user_id => current_user.id, :account_id => params[:id],:status => false)
+    if new_member.save
+      redirect_to account_path(params[:id]), :notice => "Request was successfully sended."
+    else
+      redirect_to account_path(params[:id]), :notice => "Error!"  
+    end
+  end
 
+  def accept_request
+    if params[:member_id]
+      member = Member.find(params[:member_id])
+      member.update_attributes!(:status => true)
+      redirect_to account_path(params[:id]), :notice => "#{member.user.name} successfully added to this account"
+    else
+      redirect_to account_path(params[:id]), :notice => "Error!" 
+    end
+
+  end
+
+  def reject_request
+    if params[:member_id] 
+      member = Member.find(params[:member_id])
+      if member.user.id != @account.user.id
+        member.destroy
+        redirect_to account_path(params[:id]), :notice => "#{member.user.name} removed from this account"
+      else
+        redirect_to account_path(params[:id]), :notice => "Error!"
+      end
+    else
+      redirect_to account_path(params[:id]), :notice => "Error!" 
+    end
+  end
+
+  private
+
+  def correct_user
+    @account = Account.find(params[:id])
+    redirect_to(root_path, :notice => "Access denied!") if current_user.id != @account.user.id
+  end
 end
