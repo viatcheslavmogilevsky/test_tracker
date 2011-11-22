@@ -1,4 +1,4 @@
-<h1>Your projects</h1>
+<h1><%= @title %></h1>
 
 <% if @projects.present? %>
   <table>
@@ -14,8 +14,10 @@
        <td><%= link_to project.title, project %></td>
        <td><%= project.account.name if project.account.present? %></td>
        <td>
-        <%= link_to 'Edit', edit_project_path(project) %> | 
-        <%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %>
+        <% if project.user.id == current_user.id %>
+          <%= link_to 'Edit', edit_project_path(project) %> | 
+          <%= link_to 'Destroy', project, :confirm => 'Are you sure?', :method => :delete %>
+        <% end %> 
        </td>
       </tr>
      <% end %>

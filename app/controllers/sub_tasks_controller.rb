@@ -1,6 +1,4 @@
 class SubTasksController < ApplicationController
-  # GET /sub_tasks
-  # GET /sub_tasks.xml
   def index
     @sub_tasks = SubTask.all
 
@@ -10,8 +8,6 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # GET /sub_tasks/1
-  # GET /sub_tasks/1.xml
   def show
     @sub_task = SubTask.find(params[:id])
 
@@ -21,8 +17,6 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # GET /sub_tasks/new
-  # GET /sub_tasks/new.xml
   def new
     @sub_task = SubTask.new
 
@@ -32,13 +26,10 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # GET /sub_tasks/1/edit
   def edit
     @sub_task = SubTask.find(params[:id])
   end
 
-  # POST /sub_tasks
-  # POST /sub_tasks.xml
   def create
     @sub_task = SubTask.new(params[:sub_task])
 
@@ -53,8 +44,6 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # PUT /sub_tasks/1
-  # PUT /sub_tasks/1.xml
   def update
     @sub_task = SubTask.find(params[:id])
 
@@ -69,8 +58,6 @@ class SubTasksController < ApplicationController
     end
   end
 
-  # DELETE /sub_tasks/1
-  # DELETE /sub_tasks/1.xml
   def destroy
     @sub_task = SubTask.find(params[:id])
     @sub_task.destroy

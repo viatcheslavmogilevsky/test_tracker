@@ -1,6 +1,5 @@
 class AccountsController < ApplicationController
-  # GET /accounts
-  # GET /accounts.xml
+
   before_filter :authenticate_user!
   before_filter :correct_user, :only => [:destroy,:edit,:update,:accept_request,:reject_request]
 
@@ -19,12 +18,12 @@ class AccountsController < ApplicationController
   end
 
 
-  # GET /accounts/1
-  # GET /accounts/1.xml
+ 
   def show
     @account = Account.find(params[:id])
     @projects = @account.projects
     @members = @account.members.map {|member| member.user_id}
+    @title = "Projects on this account"
 
     respond_to do |format|
         format.html # show.html.erb
@@ -32,8 +31,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  # GET /accounts/new
-  # GET /accounts/new.xml
+
   def new
     @account = Account.new
     @user_id = current_user.id
@@ -43,13 +41,12 @@ class AccountsController < ApplicationController
     end
   end
 
-  # GET /accounts/1/edit
+
   def edit
 
   end
 
-  # POST /accounts
-  # POST /accounts.xml
+
   def create
     @account = Account.new(params[:account])
     
@@ -65,8 +62,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  # PUT /accounts/1
-  # PUT /accounts/1.xml
+ 
   def update
     respond_to do |format|
       if @account.update_attributes(params[:account])
@@ -79,8 +75,7 @@ class AccountsController < ApplicationController
     end
   end
 
-  # DELETE /accounts/1
-  # DELETE /accounts/1.xml
+
   def destroy
     @account.destroy
 

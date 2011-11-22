@@ -1,6 +1,4 @@
 class ProjectsController < ApplicationController
-  # GET /projects
-  # GET /projects.xml
   include ProjectsHelper
   before_filter :authenticate_user!
   before_filter :correct_user, :only => [:show, :destroy,:edit, :update]
@@ -8,6 +6,7 @@ class ProjectsController < ApplicationController
 
   def index
     @projects = current_user.projects
+    @title = "Your projects:"
 
     respond_to do |format|
       format.html # index.html.erb
@@ -15,8 +14,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /projects/1
-  # GET /projects/1.xml
   def show
     @finished_tasks = @project.finished_tasks
     @current_tasks = @project.current_tasks
@@ -29,8 +26,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /projects/new
-  # GET /projects/new.xml
   def new
     @project = Project.new
     
@@ -40,13 +35,10 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # GET /projects/1/edit
   def edit
     @accounts = @project.user.accounts.map {|account| [account.name, account.id]}
   end
 
-  # POST /projects
-  # POST /projects.xml
   def create
     @project = Project.new(params[:project])
 
@@ -61,8 +53,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # PUT /projects/1
-  # PUT /projects/1.xml
   def update
 
     respond_to do |format|
@@ -76,8 +66,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  # DELETE /projects/1
-  # DELETE /projects/1.xml
   def destroy
     @project.destroy
 
@@ -88,7 +76,6 @@ class ProjectsController < ApplicationController
   end
 
   private
-
 
   def correct_user
     @project = Project.find(params[:id])
@@ -101,5 +88,4 @@ class ProjectsController < ApplicationController
         redirect_to new_account_path, :notice => "First, create an account"
     end
   end
-  
 end
