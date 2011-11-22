@@ -3,13 +3,19 @@ class AccountsController < ApplicationController
   # GET /accounts.xml
   before_filter :authenticate_user!
   def index
-    @accounts = Account.all
-
+    if params[:user_id]
+      @user_accouns = current_user.accounts
+      @title = "Your accounts"
+    else  
+      @accounts = Account.all
+      @title = "Listing accounts"    
+    end  
     respond_to do |format|
       format.html # index.html.erb
       format.xml  { render :xml => @accounts }
     end
   end
+
 
   # GET /accounts/1
   # GET /accounts/1.xml
@@ -103,4 +109,6 @@ class AccountsController < ApplicationController
       format.xml  { head :ok }
     end
   end
+
+
 end
